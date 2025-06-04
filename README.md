@@ -2,7 +2,6 @@
 
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.7.0-red)](https://pytorch.org/)
-[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
 ## 📝 Proje Açıklaması
 
@@ -10,9 +9,9 @@ Bu proje, derin öğrenme kullanarak **kuş** ve **drone** görüntülerini sın
 
 ## 🎯 Amaç
 
-Hava savunma sistemleri ve güvenlik uygulamaları için kritik olan kuş-drone ayrımını otomatik olarak yapabilen bir model geliştirmek.
+Birçok otonom ve güvenlik uygulamaları için kritik olan kuş-drone ayrımını otomatik olarak yapabilen bir model geliştirmek.
 
-## 📊 Veri Seti
+## 📊 Veri Seti [link](https://www.sciencedirect.com/science/article/pii/S2352340923004742)
 
 - **Toplam Görüntü Sayısı**: 20,952 görüntü
 - **Eğitim Seti**: 18,323 görüntü
@@ -41,8 +40,8 @@ Projede aşağıdaki CNN mimarileri test edilmiştir:
 ### Gereksinimler
 
 ```bash
-git clone https://github.com/[username]/datamine.git
-cd datamine
+git clone https://github.com/kemaltml/ClassificationWithDLProject.git
+cd ClassificationWithDLProject
 ```
 
 ### Sanal Ortam Oluşturma
@@ -82,13 +81,12 @@ python labeling.py
 
 Ana notebook dosyalarını kullanarak modelleri eğitebilirsiniz:
 
-- `datamine.ipynb`: Ana model eğitimi ve karşılaştırması
-- `bitirme.ipynb`: Detaylı analiz ve sonuçlar
-- `mymodel.ipynb`: Özel model implementasyonu
+- model_train/ : Tüm ağırlıklarının yeniden hesaplanarak eğitim yapıldığı modeller.
+- model_TL/ : Transfer learning ile eğitimin yapıldığı modeller
 
 ### 3. Model Değerlendirmesi
 
-Eğitilmiş modeller `models/`, `model_train/`, `model_test/`, `model_TL/` klasörlerinde saklanır.
+Eğitilmiş modeller `models/` klasörleründe saklanır.
 
 ## 📈 Sonuçlar
 
@@ -127,9 +125,6 @@ datamine/
 ├── model_test/         # Test modelleri  
 ├── model_TL/           # Transfer learning modelleri
 ├── results/            # Sonuç dosyaları
-├── datamine.ipynb      # Ana notebook
-├── bitirme.ipynb       # Detaylı analiz notebook
-├── mymodel.ipynb       # Özel model notebook
 ├── labeling.py         # Veri etiketleme scripti
 ├── labels_train.csv    # Eğitim etiketleri
 ├── labels_valid.csv    # Doğrulama etiketleri
@@ -171,10 +166,4 @@ Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için [LICENSE](LICE
 - PyTorch geliştirici topluluğu
 - Açık kaynak kütüphane geliştiricileri
 
-## 📞 İletişim
 
-Herhangi bir sorunuz veya öneriniz için issue açabilir veya benimle iletişime geçebilirsiniz.
-
----
-
-⭐ Bu projeyi beğendiyseniz star vermeyi unutmayın!
