@@ -1,13 +1,13 @@
 import os
-import pandas as pd 
-import torch 
+import pandas as pd
+import torch
 from torch.utils.data import Dataset, DataLoader
-from torchvision import transforms, models 
-from torchvision.models import ResNet50_Weights, resnet50
+from torchvision import transforms, models
+from torchvision.models import ResNet18_Weights, resnet18
 from PIL import Image
 import torch.nn as nn
-import torch.optim as optim 
-from matplotlib import pyplot as plt 
+import torch.optim as optim
+from matplotlib import pyplot as plt
 from tqdm import tqdm
 import shutil
 
@@ -15,7 +15,7 @@ class CSVImageDataset(Dataset):
     def __init__(self, csv_file, root_dir, transform=None):
         self.annotations = pd.read_csv(csv_file)
         self.root_dir = root_dir
-        self.transform = transform 
+        self.transform = transform
         self.label_map = {'bird':0, 'drone':1}
 
     def __len__(self):
@@ -29,9 +29,9 @@ class CSVImageDataset(Dataset):
 
         if self.transform:
             image = self.transform(image)
-        return image, label 
+        return image, label
 
-transform = transforms.Compose([transforms.Resize((224,224)), 
+transform = transforms.Compose([transforms.Resize((224,224)),
                                 transforms.ToTensor(),
                                 transforms.Normalize(mean=[0.5]*3, std=[0.5]*3)
                                 ])
@@ -43,9 +43,9 @@ valid_loader = DataLoader(valid_dataset, batch_size=16, shuffle=False)
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-model_name = 'resnet50_TL'
-weights = ResNet50_Weights.DEFAULT
-model = resnet50(weights=weights)
+model_name = 'resnet18'
+weights = ResNet18_Weights.DEFAULT
+model = resnet18(weights=weights)
 model.fc = nn.Linear(model.fc.in_features, 2)
 model = model.to(device)
 
@@ -59,8 +59,8 @@ valid_acc_history = []
 
 for epoch in range(epochs):
     model.train()
-    running_loss = 0.0 
-    
+    running_loss = 0.0
+
     for images, labels in tqdm(train_loader, desc=f'Epoch {epoch+1}/{epochs} - Training'):
         images, labels = images.to(device), labels.to(device)
 
@@ -75,9 +75,9 @@ for epoch in range(epochs):
     train_loss_history.append(train_loss)
 
     model.eval()
-    val_loss = 0.0 
-    correct = 0 
-    total = 0 
+    val_loss = 0.0
+    correct = 0
+    total = 0
 
     with torch.no_grad():
         for images, labels in tqdm(valid_loader, desc=f'Epoch {epoch+1}/{epochs} - Validation'):
@@ -92,12 +92,12 @@ for epoch in range(epochs):
 
     valid_loss = val_loss / len(valid_loader)
     valid_loss_history.append(valid_loss)
-    accuracy = correct / total 
+    accuracy = correct / total
     valid_acc_history.append(accuracy)
 
     print(f'Epoch {epoch+1}/{epochs} - Train Loss: {train_loss:.4f} | Valid Loss: {valid_loss:.4f} | Accuracy: {accuracy:.4f}\n')
 
-torch.save(model.state_dict(), f'models/{model_name}_model.pth')
+torch.save(model.state_dict(), 'resnet18_TL_model.pth')
 
 
 plt.plot(train_loss_history, label='Train Loss')
@@ -117,5 +117,3 @@ plt.legend()
 plt.title(f'{model_name} Validation Accuracy')
 plt.savefig(f'figures/{model_name}_valid.png')
 plt.show()
-
-
